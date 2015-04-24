@@ -33,5 +33,4 @@ public abstract class Entity
     {
         return ID;
     }
-    public abstract void reset();
 }

@@ -7,8 +7,8 @@ package edu.moravian.main;
 
 import edu.moravian.entity.Agent;
 import edu.moravian.entity.Entity;
-import edu.moravian.graph.NavGraph;
-import edu.moravian.graph.PathFinder;
+import edu.moravian.entity.graph.NavGraph;
+import edu.moravian.entity.graph.PathFinder;
 import edu.moravian.math.CoordinateTranslator;
 import edu.moravian.math.Point2D;
 import edu.moravian.view.SpriteRenderer;
@@ -61,7 +61,7 @@ public class Play extends BasicGame
         
         this.pathFinder = new PathFinder(new NavGraph(tiledMap));
         
-        this.agentEntity = new Agent(new Point2D(10,90), this.pathFinder);
+        this.agentEntity = new Agent(new Point2D(10,90), 0.1, this.pathFinder, new Point2D(1,21));
         this.agentRenderer = new SpriteRenderer(this.agentAnimation, this.agentEntity);
     }
 

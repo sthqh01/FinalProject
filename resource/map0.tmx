@@ -17,7 +17,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="32" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3PMREAIBADwcS/EnAARh4HIIN3keaKzJWZLUmnV6He3gs25caPHz9+/Pjx4091WJrO+Vd/b+f8HyJYU/8ACwAA
+   H4sIAAAAAAAAA7vOwMBwA4ivDxD9HIhfDCB9lJGB4RjjwPn/KtDua4wD5/+B8vdgif9R/4/6f9T/o/4f9f+o/0ei/1cC2x6rBrD9sxNo964BbP8AAD0OTrkACwAA
   </data>
  </layer>
  <layer name="Object" width="32" height="22">
