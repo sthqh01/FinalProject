@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.moravian.entity.statemachine;
+package edu.moravian.entity.statemachine.agent;
 
+import edu.moravian.entity.statemachine.AgentState;
 import edu.moravian.entity.Agent;
+import edu.moravian.entity.Entity;
 import edu.moravian.entity.graph.PathFinder;
 import edu.moravian.math.CoordinateTranslator;
 import edu.moravian.math.Point2D;
@@ -18,17 +20,19 @@ import java.util.ArrayList;
 public class Seeking implements AgentState
 {
     private CoordinateTranslator coordinateTranslator;
+    private Entity agentEntity;
     private ArrayList<Point2D> path;
     private int step;
-    public Seeking(ArrayList<Point2D> path)
+    public Seeking(Entity agentEntity, ArrayList<Point2D> path)
     {
+        this.agentEntity = agentEntity;
         this.coordinateTranslator = CoordinateTranslator.getInstance();
         this.path = path;
         this.step = 0;
     }
 
     @Override
-    public void execute(Agent agentEntity) 
+    public void execute() 
     {
         if(step<this.path.size())
         {
@@ -38,7 +42,7 @@ public class Seeking implements AgentState
             Point2D destinationMapLocation = new Point2D(destinationMX, destinationMY);
             if(!isAtDestination(destinationMapLocation, agentEntity.getMapLocation()))
             {
-                agentEntity.move(new Point2D(destinationMX, destinationMY));
+                ((Agent)agentEntity).move(new Point2D(destinationMX, destinationMY));
             }
             else
             {
@@ -47,10 +51,12 @@ public class Seeking implements AgentState
                     tempTargetLocation = this.path.get(step);
                     destinationMX = (int)coordinateTranslator.tileToMap(tempTargetLocation).getX();
                     destinationMY = (int)coordinateTranslator.tileToMap(tempTargetLocation).getY();
-                    agentEntity.move(new Point2D(destinationMX, destinationMY));
+                    ((Agent)agentEntity).move(new Point2D(destinationMX, destinationMY));
                 }
             }
         }
+        else
+            ((Agent)agentEntity).setIsAlive(false);
     }
 
     @Override

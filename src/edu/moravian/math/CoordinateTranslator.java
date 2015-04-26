@@ -96,6 +96,20 @@ public class CoordinateTranslator {
         return new Point2D(mapX, mapY);
     }
     
+    public synchronized Point2D mapToTile(int x, int y)
+    {
+        int tileX = (int) (x/32);
+        int tileY = (int) (y/32);
+        return new Point2D(tileX, tileY);
+    }
+    
+    public synchronized Point2D mapToTile(Point2D point)
+    {
+        int tileX = (int) (point.getX()/32);
+        int tileY = (int) (point.getX()/32);
+        return new Point2D(tileX, tileY);
+    }
+    
     public synchronized Vector2D pointToLocalSpace(Vector2D point, Vector2D entityHeading
             , Vector2D entitySide, Vector2D entityPosition)
     {

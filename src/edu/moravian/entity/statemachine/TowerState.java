@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.moravian.entity;
+package edu.moravian.entity.statemachine;
+
+import edu.moravian.entity.Tower;
 
 /**
  *
  * @author danielhuynh
  */
-public class Bullet {
-    
+public interface TowerState extends EntityState
+{
 }

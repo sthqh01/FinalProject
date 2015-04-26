@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package edu.moravian.entity.statemachine;
-import edu.moravian.entity.Agent;
+import edu.moravian.entity.Entity;
 
 
 /**
@@ -13,36 +13,36 @@ import edu.moravian.entity.Agent;
  */
 public class StateMachine 
 {
-    private final Agent agentEntity;
-    private AgentState currentState, previousState, globalState;
-    public StateMachine(Agent agentEntity)
+    private final Entity entity;
+    private EntityState currentState, previousState, globalState;
+    public StateMachine(Entity entity)
     {
-        this.agentEntity = agentEntity;
+        this.entity = entity;
         this.currentState = null;
         this.previousState = null;
         this.globalState = null;
     }
     
-    public void setCurrentState(AgentState state)
+    public void setCurrentState(EntityState state)
     {
         this.currentState = state;
     }
 
-    public void setPreviousState(AgentState state) {
+    public void setPreviousState(EntityState state) {
         this.previousState = state;
     }
 
-    public void setGlobalState(AgentState state) {
+    public void setGlobalState(EntityState state) {
         this.globalState = state;
     }
     
     public void update()
     {
         if(currentState!=null)
-            currentState.execute(agentEntity);
+            currentState.execute();
     }
     
-    public void changeState(AgentState newState)
+    public void changeState(EntityState newState)
     {
         previousState = currentState;
         currentState = newState;
@@ -53,15 +53,15 @@ public class StateMachine
         this.changeState(previousState);
     }
 
-    public AgentState getCurrentState() {
+    public EntityState getCurrentState() {
         return currentState;
     }
 
-    public AgentState getPreviousState() {
+    public EntityState getPreviousState() {
         return previousState;
     }
 
-    public AgentState getGlobalState() {
+    public EntityState getGlobalState() {
         return globalState;
     }
     

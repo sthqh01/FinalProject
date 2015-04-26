@@ -5,15 +5,13 @@
  */
 package edu.moravian.entity.statemachine;
 
-import edu.moravian.entity.graph.PathFinder;
-import edu.moravian.entity.Agent;
-import edu.moravian.entity.statemachine.EntityState;
+import edu.moravian.entity.Entity;
 
 /**
  *
  * @author danielhuynh
  */
-public interface AgentState extends EntityState 
-{   
-    public PathFinder getPathFinder();
+public interface EntityState 
+{
+    public void execute();
 }

@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.moravian.data;
+package edu.moravian.entity.statemachine.tower;
+
+import edu.moravian.entity.Entity;
 
 /**
  *
  * @author danielhuynh
  */
-public class ParamLoader {
-    
+public interface TargetSelector 
+{
+    public Entity selectTarget();
 }
