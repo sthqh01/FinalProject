@@ -6,8 +6,6 @@
 package edu.moravian.entity.statemachine;
 
 import edu.moravian.entity.graph.PathFinder;
-import edu.moravian.entity.Agent;
-import edu.moravian.entity.statemachine.EntityState;
 
 /**
  *

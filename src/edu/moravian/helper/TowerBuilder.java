@@ -5,6 +5,9 @@
  */
 package edu.moravian.helper;
 
+import edu.moravian.data.ParameterLoader;
+import edu.moravian.data.object.TowerData;
+import edu.moravian.entity.Entity;
 import edu.moravian.entity.Tower;
 import edu.moravian.entity.wave.EntityManager;
 import edu.moravian.entity.wave.TowerManager;
@@ -26,12 +29,15 @@ public class TowerBuilder
             , projectileManager;
     private final CoordinateTranslator coordinateTranslator;
     private Point2D mouseTileLocation;
-    public TowerBuilder(TiledMap tiledMap, EntityManager towerManager, EntityManager agentManager, EntityManager projectileManager)
+    private ParameterLoader towerParameterLoader;
+    public TowerBuilder(TiledMap tiledMap, ParameterLoader towerParameterLoader,
+            EntityManager towerManager, EntityManager agentManager, EntityManager projectileManager)
     {
         this.tiledMap = tiledMap;
         this.towerManager = towerManager;
         this.agentManager = agentManager;
         this.projectileManager = projectileManager;
+        this.towerParameterLoader = towerParameterLoader;
         this.coordinateTranslator = CoordinateTranslator.getInstance();
         this.mouseTileLocation = new Point2D(0,0);
     }
@@ -40,15 +46,28 @@ public class TowerBuilder
     {
         if(isBuildable(mouseTileLocation)) {
             Point2D towerMapLocation = coordinateTranslator.tileToMap(mouseTileLocation);
-            ((TowerManager)this.towerManager).add(new Tower(towerMapLocation, this.agentManager, this.projectileManager));
+            TowerData towerData = (TowerData)this.towerParameterLoader.getData(0);
+            ((TowerManager)this.towerManager).add(new Tower(towerMapLocation, towerData, this.agentManager, this.projectileManager));
         }
     }
     
     private boolean isBuildable(Point2D mouseTileLocation)
     {
         if(tiledMap.getTileId((int)mouseTileLocation.getX()
-                , (int)mouseTileLocation.getY(), tiledMap.getLayerIndex("Object")) != 0)
+                , (int)mouseTileLocation.getY(), tiledMap.getLayerIndex("Object")) != 0
+                && !this.isOnTopOfOtherTower(mouseTileLocation))
             return true;
+        return false;
+    }
+    
+    private boolean isOnTopOfOtherTower(Point2D mouseTileLocation)
+    {
+        Point2D towerTileLocation;
+        for(Entity tower : this.towerManager.getEntity()) {
+            towerTileLocation = coordinateTranslator.mapToTile(tower.getMapLocation());
+            if(towerTileLocation.equals(mouseTileLocation))
+                return true;
+        }
         return false;
     }
     

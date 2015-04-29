@@ -5,8 +5,6 @@
  */
 package edu.moravian.entity.statemachine;
 
-import edu.moravian.entity.Entity;
-
 /**
  *
  * @author danielhuynh

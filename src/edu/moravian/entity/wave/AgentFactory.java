@@ -36,7 +36,7 @@ public class AgentFactory
     {
         for(int i = 0; i < numAgent; i++)
         {
-            this.wave.add(new Agent(mapLocation, speed, pathFinder, destinationTileLocation));
+//            this.wave.add(new Agent(mapLocation, speed, pathFinder, destinationTileLocation));
         }
         return wave;
     }

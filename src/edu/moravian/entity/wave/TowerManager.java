@@ -7,7 +7,6 @@ package edu.moravian.entity.wave;
 
 import edu.moravian.entity.Entity;
 import edu.moravian.entity.Tower;
-import edu.moravian.entity.statemachine.StateMachine;
 import java.util.ArrayList;
 
 /**

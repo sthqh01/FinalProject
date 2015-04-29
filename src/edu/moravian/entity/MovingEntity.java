@@ -16,7 +16,6 @@ public abstract class MovingEntity extends Entity
 {
     private Vector2D velocity, heading, side;
     protected double speed;
-    protected int delta;
     protected boolean isAlive;
 
     public MovingEntity(Point2D mapLocation, double speed) {

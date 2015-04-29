@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package edu.moravian.entity.statemachine;
-
-import edu.moravian.entity.Tower;
-
 /**
  *
  * @author danielhuynh

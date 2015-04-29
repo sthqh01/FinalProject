@@ -106,7 +106,7 @@ public class CoordinateTranslator {
     public synchronized Point2D mapToTile(Point2D point)
     {
         int tileX = (int) (point.getX()/32);
-        int tileY = (int) (point.getX()/32);
+        int tileY = (int) (point.getY()/32);
         return new Point2D(tileX, tileY);
     }
     

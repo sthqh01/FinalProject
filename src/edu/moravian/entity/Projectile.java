@@ -15,9 +15,11 @@ import edu.moravian.math.Point2D;
 public class Projectile extends MovingEntity
 {
     private final Entity target;
-    public Projectile(Point2D mapLocation, double speed, Entity target) {
+    private final int damage;
+    public Projectile(Point2D mapLocation, double speed, int damage, Entity target) {
         super(mapLocation, speed);
         this.target = target;
+        this.damage = damage;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class Projectile extends MovingEntity
         this.delta = delta;
         if (CollisionDetector.checkCollision(this.mapLocation, this.target.getMapLocation())) {
             this.isAlive = false;
-            ((MovingEntity) this.target).setIsAlive(false);
+            ((Agent) this.target).gotHit(this.damage);
         } else {
             this.move(this.target.getMapLocation());
         }

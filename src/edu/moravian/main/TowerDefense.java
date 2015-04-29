@@ -20,7 +20,7 @@ public class TowerDefense {
      */
     public static void main(String[] args) throws SlickException 
     {
-        Play play = new Play("Game", 1024, 704);
+        Play play = new Play("Game", 1024, 703);
         AppGameContainer app = new AppGameContainer(play
                 , play.getScreenWidth(), play.getScreenHeight(), false);
         app.setAlwaysRender(true);

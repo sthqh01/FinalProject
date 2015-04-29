@@ -5,10 +5,8 @@
  */
 package edu.moravian.entity.wave;
 
-import edu.moravian.entity.Agent;
 import edu.moravian.entity.Entity;
 import edu.moravian.entity.Projectile;
-import edu.moravian.math.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +14,6 @@ import java.util.ArrayList;
  * @author danielhuynh
  */
 public class ProjectileManager extends EntityManager {
-
     public ProjectileManager() {
         this.entityList = new ArrayList<>();
     }
@@ -24,8 +21,8 @@ public class ProjectileManager extends EntityManager {
     @Override
     public void update(int delta) {
         for (int i = 0; i < entityList.size(); i++) {
-            Entity projectile = entityList.get(i);
-            if (((Projectile) entityList.get(i)).getIsAlive() == false) {
+            Projectile projectile = (Projectile)entityList.get(i);
+            if (projectile.getIsAlive() == false) {
                 entityList.remove(projectile);
             }
         }
@@ -34,7 +31,7 @@ public class ProjectileManager extends EntityManager {
         }
     }
 
-    public void add(Point2D mapLocation, Entity target) {
-        this.entityList.add(new Projectile(mapLocation, 0.3, target));
+    public void add(Projectile projectile) {
+        this.entityList.add(projectile);
     }
 }
