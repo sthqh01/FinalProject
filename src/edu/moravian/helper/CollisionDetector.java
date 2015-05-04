@@ -23,7 +23,7 @@ public class CollisionDetector
     
     public static boolean checkCollision(Point2D mapLocation1, Point2D mapLocation2)
     {
-        return Math.pow(16.0+16.0, 2) > 
+        return Math.pow(8.0+8.0, 2) > 
                 (Math.pow(mapLocation1.getX()-mapLocation2.getX(), 2) 
                 + Math.pow(mapLocation1.getY()-mapLocation2.getY(), 2));
     }

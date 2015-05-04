@@ -6,10 +6,10 @@
 package edu.moravian.view;
 
 import edu.moravian.entity.Entity;
-import edu.moravian.entity.wave.EntityManager;
+import edu.moravian.entity.manager.EntityManager;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Renderable;
+import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -18,20 +18,18 @@ import org.newdawn.slick.Renderable;
 public class SpriteRendererManager 
 {
     private ArrayList<SpriteRenderer> spriteRendererList;
-    private Renderable renderable;
     private EntityManager entityManager;
-    public SpriteRendererManager(Renderable renderable, EntityManager agentManager)
+    public SpriteRendererManager(EntityManager agentManager)
     {
-        this.renderable = renderable;
         this.entityManager = agentManager;
         this.spriteRendererList = new ArrayList<>();
     }
     
-    public void update()
+    public void update() throws SlickException
     {
         this.spriteRendererList.clear();
         for(Entity entity : entityManager.getEntity())
-            this.spriteRendererList.add(new SpriteRenderer(this.renderable, entity));
+            this.spriteRendererList.add(new SpriteRenderer(entity));
         for(SpriteRenderer spriteRenderer : this.spriteRendererList)
             spriteRenderer.update();
     }

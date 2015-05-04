@@ -6,7 +6,8 @@
 package edu.moravian.entity.statemachine.tower;
 
 import edu.moravian.entity.Entity;
-import edu.moravian.entity.wave.EntityManager;
+import edu.moravian.entity.Tower;
+import edu.moravian.entity.manager.EntityManager;
 
 /**
  *
@@ -31,7 +32,8 @@ public class ClosestTargetSelector implements TargetSelector
         Entity closestEntity = null;
         for (Entity agentEntity : entityManager.getEntity()) {
             int distance = this.getSquaredDistance(towerEntity, agentEntity);
-            if (distance < closestSquaredDistance) {
+            if (distance < closestSquaredDistance 
+                    && distance <= Math.pow(((Tower)towerEntity).getSightRadius(), 2)) {
                 closestSquaredDistance = distance;
                 closestEntity = agentEntity;
             }

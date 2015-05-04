@@ -5,7 +5,7 @@
  */
 package edu.moravian.entity.statemachine;
 
-import edu.moravian.entity.graph.PathFinder;
+import edu.moravian.entity.pathFinding.PathFinder;
 
 /**
  *

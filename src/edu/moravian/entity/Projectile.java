@@ -5,8 +5,11 @@
  */
 package edu.moravian.entity;
 
+import edu.moravian.data.object.Data;
+import edu.moravian.data.object.ProjectileData;
 import edu.moravian.helper.CollisionDetector;
 import edu.moravian.math.Point2D;
+import org.newdawn.slick.Animation;
 
 /**
  *
@@ -16,10 +19,10 @@ public class Projectile extends MovingEntity
 {
     private final Entity target;
     private final int damage;
-    public Projectile(Point2D mapLocation, double speed, int damage, Entity target) {
-        super(mapLocation, speed);
+    public Projectile(Point2D mapLocation, Data projectileData, Entity target) {
+        super(mapLocation, projectileData, ((ProjectileData)projectileData).getSpeed());
         this.target = target;
-        this.damage = damage;
+        this.damage = ((ProjectileData)projectileData).getDamage();
     }
 
     @Override
@@ -32,5 +35,10 @@ public class Projectile extends MovingEntity
         } else {
             this.move(this.target.getMapLocation());
         }
+    }
+    
+    public Entity getTarget()
+    {
+        return this.target;
     }
 }

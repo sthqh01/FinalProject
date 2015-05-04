@@ -5,6 +5,7 @@
  */
 package edu.moravian.entity;
 
+import edu.moravian.data.object.Data;
 import edu.moravian.math.Point2D;
 import edu.moravian.math.Vector2D;
 
@@ -18,8 +19,8 @@ public abstract class MovingEntity extends Entity
     protected double speed;
     protected boolean isAlive;
 
-    public MovingEntity(Point2D mapLocation, double speed) {
-        super(mapLocation);
+    public MovingEntity(Point2D mapLocation, Data entityData, double speed) {
+        super(mapLocation, entityData);
         this.speed = speed;
         this.isAlive = true;
     }

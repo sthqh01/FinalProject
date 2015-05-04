@@ -6,11 +6,13 @@
 package edu.moravian.helper;
 
 import edu.moravian.data.ParameterLoader;
+import edu.moravian.data.object.ProjectileData;
 import edu.moravian.data.object.TowerData;
 import edu.moravian.entity.Entity;
 import edu.moravian.entity.Tower;
-import edu.moravian.entity.wave.EntityManager;
-import edu.moravian.entity.wave.TowerManager;
+import edu.moravian.entity.manager.EntityManager;
+import edu.moravian.entity.manager.TowerManager;
+import edu.moravian.entity.spacePartitioning.CellSpacePartition;
 import edu.moravian.math.CoordinateTranslator;
 import edu.moravian.math.Point2D;
 import org.newdawn.slick.Color;
@@ -25,29 +27,37 @@ public class TowerBuilder
 {
     private final TiledMap tiledMap;
     private final EntityManager towerManager
-            , agentManager
             , projectileManager;
     private final CoordinateTranslator coordinateTranslator;
     private Point2D mouseTileLocation;
-    private ParameterLoader towerParameterLoader;
-    public TowerBuilder(TiledMap tiledMap, ParameterLoader towerParameterLoader,
-            EntityManager towerManager, EntityManager agentManager, EntityManager projectileManager)
+    private final ParameterLoader towerParameterLoader, projectileParameterLoader;
+    private final ResourceManager resourceManager;
+    private final CellSpacePartition cellSpacePartition;
+    public TowerBuilder(TiledMap tiledMap, ParameterLoader towerParameterLoader, ParameterLoader projectileParameterLoader
+            , EntityManager towerManager, CellSpacePartition cellSpacePartition, EntityManager projectileManager)
     {
+        this.cellSpacePartition = cellSpacePartition;
         this.tiledMap = tiledMap;
         this.towerManager = towerManager;
-        this.agentManager = agentManager;
         this.projectileManager = projectileManager;
         this.towerParameterLoader = towerParameterLoader;
+        this.projectileParameterLoader = projectileParameterLoader;
         this.coordinateTranslator = CoordinateTranslator.getInstance();
         this.mouseTileLocation = new Point2D(0,0);
+        this.resourceManager = ResourceManager.getResourceManager();
     }
     
-    private void build(Point2D mouseTileLocation)
+    private void build(Point2D mouseTileLocation, int type)
     {
         if(isBuildable(mouseTileLocation)) {
             Point2D towerMapLocation = coordinateTranslator.tileToMap(mouseTileLocation);
-            TowerData towerData = (TowerData)this.towerParameterLoader.getData(0);
-            ((TowerManager)this.towerManager).add(new Tower(towerMapLocation, towerData, this.agentManager, this.projectileManager));
+            TowerData towerData = (TowerData)this.towerParameterLoader.getData(type);
+            if(towerData.getCost() <= this.resourceManager.getGold()) {
+                ProjectileData projectileData = (ProjectileData)this.projectileParameterLoader.getData(type);
+                ((TowerManager)this.towerManager).add(new Tower(towerMapLocation
+                        , towerData, projectileData,this.cellSpacePartition, this.projectileManager));
+                this.resourceManager.minusGold(towerData.getCost());
+            }
         }
     }
     
@@ -71,10 +81,10 @@ public class TowerBuilder
         return false;
     }
     
-    public void update(Point2D mouseTileLocation, boolean isMousePressed)
+    public void update(Point2D mouseTileLocation, boolean isMousePressed, int towerType)
     {
         if(isMousePressed)
-            this.build(mouseTileLocation);
+            this.build(mouseTileLocation, towerType);
         this.mouseTileLocation = mouseTileLocation;
     }
     

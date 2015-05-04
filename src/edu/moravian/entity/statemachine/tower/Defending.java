@@ -8,7 +8,7 @@ package edu.moravian.entity.statemachine.tower;
 import edu.moravian.entity.Entity;
 import edu.moravian.entity.statemachine.TowerState;
 import edu.moravian.entity.Tower;
-import edu.moravian.entity.wave.EntityManager;
+import edu.moravian.entity.spacePartitioning.CellSpacePartition;
 
 /**
  *
@@ -16,19 +16,24 @@ import edu.moravian.entity.wave.EntityManager;
  */
 public class Defending implements TowerState {
 
-    private final TargetSelector closestTargetSelector;
     private final Tower towerEntity;
+    private final CellSpacePartition cellSpacePartition;
+    private final TargetSelector targetSelector;
 
-    public Defending(Tower towerEntity, EntityManager agentManager) {
+    public Defending(Tower towerEntity, CellSpacePartition cellSpacePartition) {
         this.towerEntity = towerEntity;
-        this.closestTargetSelector = new ClosestTargetSelector(towerEntity, agentManager);
+        this.cellSpacePartition = cellSpacePartition;
+        this.targetSelector = new ClosestTargetSelector(towerEntity
+                , cellSpacePartition.getAgentManager());
     }
 
     @Override
     public void execute() {
-        Entity target = this.closestTargetSelector.selectTarget();
-        if (target != null && (Math.pow(towerEntity.getSightRadius(), 2)
-                > ((ClosestTargetSelector) this.closestTargetSelector).getClosestSquaredDistance())) {
+        Entity target = this.cellSpacePartition.getClosestTarget(this.towerEntity.getMapLocation()
+                , this.towerEntity.getSightRadius());
+//        Entity target = this.targetSelector.selectTarget();
+        this.towerEntity.setCurrentTarget(target);
+        if (target != null) {
             if (this.towerEntity.getTimeSinceLastShoot() >= this.towerEntity.getFireDelay()) {
                 ((Tower) this.towerEntity).shoot(target);
                 this.towerEntity.setTimeSinceLastShoot(0);

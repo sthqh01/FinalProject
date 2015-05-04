@@ -17,12 +17,17 @@
  </tileset>
  <layer name="Tile Layer 1" width="32" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA7vOwMBwA4ivDxD9HIhfDCB9lJGB4RjjwPn/KtDua4wD5/+B8vdgif9R/4/6f9T/o/4f9f+o/0ei/1cC2x6rBrD9sxNo964BbP8AAD0OTrkACwAA
+   H4sIAAAAAAAAA2NgGFjwHIhfDCB9HQnfGAD6ORIeKP8PhL+R/T/Q8T/q/1H/j/p/1P+j/h/1/6j/R5b/AVptp7QACwAA
   </data>
  </layer>
  <layer name="Object" width="32" height="22">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA8WWXQqAMAyD5128wbyB3v9MzofBGJQkrVsLY3Q/mJBPsR6lXG3UpPlu40mcs6r7z6ruf3fes/9Px7lpjHmP/nc93/KfwbvKP+JV3Vf5R3rV/blneV3Vq3n93Vu6WP3qeeu+pUvlV/WPckfrUX5Q7mg9yo/XP1ur/LPl5V/N08sD0snmGf3+s7lG/1/U9997Dt1/AVkDH4kACwAA
+   H4sIAAAAAAAAA8WW3QmAMAyE013cQDfQ/WeqPhRKIVwusUlASv/IHfcpitTW3USeVjdW1fn2vgr7D/9DR9a4+v90HEnPnPfsP6u/5r+Cd5Z/xCu7z/KP9LL769zK6645m9ffc02XVT97Xruv6WL5Zf2j3NF6lB+UO1qP8uP1b61d/q3l5Z/N08sD0mnNM/r9t+Ya/X9h33/vOXS/A9y6Vz8ACwAA
+  </data>
+ </layer>
+ <layer name="Gate" width="32" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ2AMAxE0bM7wgSE/beBTADskdBwkndwCu5JX3J3pYF/Oww4WbM5+xd3b/ZM2hcREZF8g3//Zd3izlYcWNnicWer3NzZ5nFn+wDZbw1BAAsAAA==
   </data>
  </layer>
 </map>

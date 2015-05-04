@@ -5,62 +5,73 @@
  */
 package edu.moravian.view;
 
-import edu.moravian.math.CoordinateTranslator;
+import edu.moravian.data.object.RenderableData;
+import edu.moravian.entity.Agent;
 import edu.moravian.entity.Entity;
+import edu.moravian.entity.Explosion;
+import edu.moravian.entity.Projectile;
+import edu.moravian.entity.Tower;
 import edu.moravian.math.Point2D;
-import java.awt.Point;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Renderable;
+import org.newdawn.slick.SlickException;
 
 /**
  *
  * @author Daniel Huynh
  */
-public class SpriteRenderer
-{
-    private int drawX, drawY;
-    private boolean goUp, goDown, goLeft, goRight;
-    private final Renderable renderable;
-    private final CoordinateTranslator coordinateTranslator;
-    private final Entity spriteEntity;
+public class SpriteRenderer {
 
-    public SpriteRenderer(Renderable renderable, Entity spriteEntity)
-    {
-        this.renderable = renderable;
-        this.coordinateTranslator = CoordinateTranslator.getInstance();
+    private int drawX, drawY;
+    private Renderable renderable;
+    private final Entity spriteEntity;
+    private double prevAngle;
+
+    public SpriteRenderer(Entity spriteEntity) throws SlickException {
+        RenderableData renderableData = (RenderableData) spriteEntity.getEntityData();
+        this.renderable = renderableData.getRenderable();
         this.spriteEntity = spriteEntity;
+        this.prevAngle = 0;
     }
 
-    public void update()
-    {
+    public void update() {
         Point2D spriteMapCoor = spriteEntity.getMapLocation();
         this.drawX = (int) spriteMapCoor.getX();
         this.drawY = (int) spriteMapCoor.getY();
     }
-    
-    public void render(Graphics grphcs)
-    {
-        if(goUp)
-        {
-            grphcs.rotate(drawX+16, drawY+16, -180);
-            renderable.draw(drawX, drawY);
-            grphcs.rotate(drawX+16, drawY+16, 180);
-        }
-        else if(goLeft)
-        {
-            grphcs.rotate(drawX+16, drawY+16, 90);
-            renderable.draw(drawX, drawY);
-            grphcs.rotate(drawX+16, drawY+16, -90);
-        }
-        else if(goRight)
-        {
-            grphcs.rotate(drawX+16, drawY+16, -90);
-            renderable.draw(drawX, drawY);
-            grphcs.rotate(drawX+16, drawY+16, 90);
-        }
-        else
-        {
-            renderable.draw(drawX-16, drawY-16);
+
+    public void render(Graphics grphcs) {
+        if (spriteEntity instanceof Tower) {
+            Entity target = ((Tower) spriteEntity).getCurrentTarget();
+            if (target != null) {
+                double angle = Math.atan2(target.getMapLocation().getY() - spriteEntity.getMapLocation().getY(), target.getMapLocation().getX() - spriteEntity.getMapLocation().getX());
+                angle = angle * (180 / Math.PI) + 90 - prevAngle;
+                prevAngle = angle;
+                grphcs.rotate(drawX, drawY, (float) angle);
+                this.renderable.draw(drawX - 16, drawY - 16);
+                grphcs.rotate(drawX, drawY, -(float) angle);
+            } else {
+                this.renderable.draw(drawX - 16, drawY - 16);
+            }
+        } else if (spriteEntity instanceof Projectile) {
+            Entity target = ((Projectile) spriteEntity).getTarget();
+            if (target != null) {
+                double angle = Math.atan2(target.getMapLocation().getY() - spriteEntity.getMapLocation().getY(), target.getMapLocation().getX() - spriteEntity.getMapLocation().getX());
+                angle = angle * (180 / Math.PI) + 90 - prevAngle;
+                prevAngle = angle;
+                grphcs.rotate(drawX, drawY, (float) angle);
+                this.renderable.draw(drawX - 16, drawY - 16);
+                grphcs.rotate(drawX, drawY, -(float) angle);
+            } else {
+                this.renderable.draw(drawX - 16, drawY - 16);
+            }
+        } else {
+            if(spriteEntity instanceof Explosion)
+                this.renderable = ((Explosion)spriteEntity).getAnimation();
+            else if(spriteEntity instanceof Agent)
+                this.renderable = ((Agent)spriteEntity).getAnimation();
+            renderable.draw(drawX - 16, drawY - 16);
         }
     }
 }

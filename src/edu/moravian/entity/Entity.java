@@ -5,6 +5,7 @@
  */
 package edu.moravian.entity;
 
+import edu.moravian.data.object.Data;
 import edu.moravian.math.Point2D;
 
 /**
@@ -17,10 +18,12 @@ public abstract class Entity {
     protected int ID;
     protected Point2D mapLocation;
     protected int delta;
+    protected Data entityData;
 
-    public Entity(Point2D mapLocation) {
+    public Entity(Point2D mapLocation, Data entityData) {
         this.ID = this.nextID();
         this.mapLocation = mapLocation;
+        this.entityData = entityData;
     }
 
     public abstract void update(int delta);
@@ -35,5 +38,10 @@ public abstract class Entity {
 
     public int getID() {
         return ID;
+    }
+    
+    public Data getEntityData()
+    {
+        return this.entityData;
     }
 }

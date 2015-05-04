@@ -6,38 +6,48 @@
 package edu.moravian.data;
 
 import edu.moravian.data.object.AgentData;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import org.ini4j.Ini;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.ini4j.Profile.Section;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 /**
  *
  * @author danielhuynh
  */
-public class AgentParameterLoader extends ParameterLoader
-{
-    public AgentParameterLoader() throws IOException {
-        this.ini = new Ini(new FileReader("resource/data/agentData.ini"));
+public final class AgentParameterLoader extends ParameterLoader {
+
+    public AgentParameterLoader(String fileName) throws IOException {
+        super(fileName);
         this.loadData();
     }
-    
-    private void loadData()
-    {
-        String agentName;
-        int maxHitPoints;
-        double speed;
-        for(Object sectionName : this.ini.keySet())
-        {
-            Section section = (Section)this.ini.get(sectionName);
+
+    @Override
+    protected void loadData() {
+        for (Object sectionName : this.ini.keySet()) {
+            Section section = (Section) this.ini.get(sectionName);
+            String agentName = null;
+            int maxHitPoints = 0;
+            double speed = 0;
+            Animation animation = null;
             for (Object key : section.keySet()) {
-                agentName = (String)sectionName;
-                maxHitPoints = (int)section.get("maxHitPoints", int.class);
-                speed = (double)section.get("speed", double.class);
-                this.dataList.add(new AgentData(agentName, maxHitPoints, speed));
+                agentName = (String) sectionName;
+                maxHitPoints = (int) section.get("maxHitPoints", int.class);
+                speed = (double) section.get("speed", double.class);
+                String spriteSheetSource = (String) section.get("spriteSheetSource");
+                SpriteSheet spriteSheet;
+                animation = null;
+                try {
+                    spriteSheet = new SpriteSheet(spriteSheetSource, 32, 32);
+                    animation = new Animation(spriteSheet, 100);
+                } catch (SlickException ex) {
+                    Logger.getLogger(AgentParameterLoader.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            this.dataList.add(new AgentData(agentName, maxHitPoints, speed, animation));
         }
     }
 }

@@ -5,17 +5,19 @@
  */
 package edu.moravian.data.object;
 
+import org.newdawn.slick.Renderable;
+
 /**
  *
  * @author danielhuynh
  */
-public class AgentData extends Data
+public class AgentData extends RenderableData
 {
     private final int maxHitPoints;
     private final double speed;
-    public AgentData(String agentName, int maxHitPoints, double speed)
+    public AgentData(String agentName, int maxHitPoints, double speed, Renderable renderable)
     {
-        super(agentName);
+        super(agentName, renderable);
         this.maxHitPoints = maxHitPoints;
         this.speed = speed;
     }

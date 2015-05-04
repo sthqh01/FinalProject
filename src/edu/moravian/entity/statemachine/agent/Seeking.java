@@ -8,7 +8,7 @@ package edu.moravian.entity.statemachine.agent;
 import edu.moravian.entity.statemachine.AgentState;
 import edu.moravian.entity.Agent;
 import edu.moravian.entity.Entity;
-import edu.moravian.entity.graph.PathFinder;
+import edu.moravian.entity.pathFinding.PathFinder;
 import edu.moravian.math.CoordinateTranslator;
 import edu.moravian.math.Point2D;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
  */
 public class Seeking implements AgentState
 {
-    private CoordinateTranslator coordinateTranslator;
-    private Entity agentEntity;
-    private ArrayList<Point2D> path;
+    private final CoordinateTranslator coordinateTranslator;
+    private final Entity agentEntity;
+    private final ArrayList<Point2D> path;
     private int step;
     public Seeking(Entity agentEntity, ArrayList<Point2D> path)
     {
@@ -55,8 +55,10 @@ public class Seeking implements AgentState
                 }
             }
         }
-        else
+        else {
+            ((Agent)agentEntity).setIsAtDestination();
             ((Agent)agentEntity).setIsAlive(false);
+        }
     }
 
     @Override
